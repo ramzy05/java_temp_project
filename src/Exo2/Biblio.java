@@ -10,9 +10,9 @@ class Auteur {
     private String nom;
     private boolean prix;
     
-    public Auteur(String name, boolean is_prime){
+    public Auteur(String name, boolean est_prime){
         nom = name;
-        prix = is_prime;
+        prix = est_prime;
     }
 
     public String getNom() {
@@ -63,7 +63,7 @@ class Exemplaire{
 
     public Exemplaire(Oeuvre obj){
         oeuvre = obj;
-        System.out.println("Nouvel exemplaire -> " + obj.getTitre()+", "+obj.getAuteur()+", en "+obj.getLangue());
+        System.out.println("Nouvel exemplaire -> " + obj.getTitre()+", "+obj.getAuteur().getNom()+", en "+obj.getLangue());
     }
     
     // Exemplaire(Oeuvre obj){
@@ -72,7 +72,7 @@ class Exemplaire{
         // } 
         
     public void afficher() {
-        System.out.println("Nouvel exemplaire -> " + oeuvre.getTitre()+", "+oeuvre.getAuteur()+", en "+oeuvre.getLangue());
+        System.out.println("Un exemplaire de " + oeuvre.getTitre()+", "+oeuvre.getAuteur().getNom()+", en "+oeuvre.getLangue());
     }
 
     public Oeuvre getOeuvre() {
@@ -85,7 +85,7 @@ class Bibliotheque{
     private ArrayList<Exemplaire> exemplaires = new ArrayList<>();
     public Bibliotheque(String name){
         nom = name;
-        System.out.println("La bibliothèque "+nom+" est ouverte\n");
+        System.out.println("La bibliothèque "+nom+" est ouverte !");
     }
 
     public String getNom() {
@@ -97,7 +97,7 @@ class Bibliotheque{
     }
 
     public void stocker (Oeuvre obj,int n){
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i <= n; i++) {
             exemplaires.add(new Exemplaire(obj));
         }
     }
@@ -125,7 +125,7 @@ class Bibliotheque{
     public int compterExemplaires(Oeuvre obj){
         int compteur = 0;
         for (Exemplaire exemplaire : exemplaires) {
-            if(exemplaire.getOeuvre() == obj){
+            if(exemplaire.getOeuvre().getTitre() == obj.getTitre()){
                 compteur++;
             }
         }
@@ -136,7 +136,7 @@ class Bibliotheque{
         exemplaires.forEach(exemp ->{
                 
             if(exemp.getOeuvre().getAuteur().getPrix() == ayant_prix){
-                System.out.println(exemp.getOeuvre().getAuteur().getNom()+"\n");
+                System.out.println(exemp.getOeuvre().getAuteur().getNom());
             }
         });
     }
@@ -144,7 +144,7 @@ class Bibliotheque{
     public void afficherAuteur(){
         exemplaires.forEach(exemp ->{
             if(exemp.getOeuvre().getAuteur().getPrix() == true){
-                System.out.println(exemp.getOeuvre().getAuteur().getNom()+"\n");
+                System.out.println(exemp.getOeuvre().getAuteur().getNom());
             }
         });
         
