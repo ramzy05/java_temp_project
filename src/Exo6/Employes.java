@@ -15,10 +15,10 @@ import java.util.Scanner;
 //"  A corrigé "
 //"  A mené à bien "
 class Employe {
-    String nom;
-    int revenuMensuel;
-    int tauxOccupation;
-    double montantPrime = 0.0;
+    private String nom;
+    private int revenuMensuel;
+    private int tauxOccupation;
+    private double montantPrime = 0.0;
 
     public Employe(String nom, int revenuMensuel, int tauxOccupation){
         this.nom = nom;
@@ -59,6 +59,38 @@ class Employe {
         return this.nom + " :\n" + "  Taux d'occupation : " + this.tauxOccupation + "%.";
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setRevenuMensuel(int revenuMensuel) {
+        this.revenuMensuel = revenuMensuel;
+    }
+
+    public void setTauxOccupation(int tauxOccupation) {
+        this.tauxOccupation = tauxOccupation;
+    }
+
+    public void setMontantPrime(double montantPrime) {
+        this.montantPrime = montantPrime;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getRevenuMensuel() {
+        return revenuMensuel;
+    }
+
+    public int getTauxOccupation() {
+        return tauxOccupation;
+    }
+
+    public double getMontantPrime() {
+        return montantPrime;
+    }
+
     public double revenuAnnuel(){
         return 12*this.revenuMensuel + this.montantPrime;
     }
@@ -69,20 +101,20 @@ class Manager extends Employe{
 
     public static final int FACTEUR_GAIN_CLIENT = 500;
     public static final int FACTEUR_GAIN_VOYAGE = 100;
-    int nbJoursVoyage;
-    int nbClientsApportes;
+    private int nbJoursVoyage;
+    private int nbClientsApportes;
 
     public Manager(String nom, int revenuMensuel, int nbJoursVoyage, int nbClientsApportes) {
         super(nom, revenuMensuel, 100);
         this.nbClientsApportes = nbClientsApportes;
         this.nbJoursVoyage = nbJoursVoyage;
-        System.out.println("Nous avons un nouvel employé : " + this.nom + ", c'est un manager");
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un manager");
     }
 
     @Override
     public String toString(){
-        if(this.montantPrime != 0){
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.montantPrime) + "\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " clients";
+        if(this.getMontantPrime() != 0){
+            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " clients";
         }else{
             return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " clients";
         }
@@ -90,6 +122,22 @@ class Manager extends Employe{
 
     public double revenuAnnuel() {
         return super.revenuAnnuel() + FACTEUR_GAIN_CLIENT*this.nbClientsApportes + FACTEUR_GAIN_VOYAGE*this.nbJoursVoyage;
+    }
+
+    public int getNbJoursVoyage() {
+        return nbJoursVoyage;
+    }
+
+    public void setNbJoursVoyage(int nbJoursVoyage) {
+        this.nbJoursVoyage = nbJoursVoyage;
+    }
+
+    public int getNbClientsApportes() {
+        return nbClientsApportes;
+    }
+
+    public void setNbClientsApportes(int nbClientsApportes) {
+        this.nbClientsApportes = nbClientsApportes;
     }
 }
 
@@ -100,13 +148,13 @@ class Testeur extends Employe {
     public Testeur(String nom, int revenuMensuel, int nbErreurCorrigees, int tauxOccupation) {
         super(nom, revenuMensuel, tauxOccupation);
         this.nbErreurCorrigees = nbErreurCorrigees;
-        System.out.println("Nous avons un nouvel employé : " + this.nom + ", c'est un testeur");
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un testeur");
     }
 
     @Override
     public String toString(){
-        if (this.montantPrime != 0){
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.montantPrime) + "\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs";
+        if (this.getMontantPrime() != 0){
+            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs";
         }else{
             return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs";
         }
@@ -125,13 +173,13 @@ class Programmeur extends Employe{
     public Programmeur(String nom, int revenuMensuel, int nbProjetsAcheves, int tauxOccupation) {
         super(nom, revenuMensuel, tauxOccupation);
         this.nbProjetsAcheves = nbProjetsAcheves;
-        System.out.println("Nous avons un nouvel employé : " + nom + ", c'est un programmeur");
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un programmeur");
     }
 
     @Override
     public String toString(){
-        if(this.montantPrime != 0){
-            return  super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.montantPrime) + "\n" + "  A mené à bien " + this.nbProjetsAcheves + " projets";
+        if(this.getMontantPrime() != 0){
+            return  super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A mené à bien " + this.nbProjetsAcheves + " projets";
         }else{
             return  super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A mené à bien " + this.nbProjetsAcheves + " projets";
         }

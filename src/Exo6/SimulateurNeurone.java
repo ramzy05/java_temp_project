@@ -16,16 +16,24 @@ class Position {
     }
 
     public Position(){
-        x = 0;
-        y = 0;
+        this.x = 0;
+        this.y = 0;
     }
 
     public double getX() {
-        return x;
+        return this.x;
     }
 
     public double getY() {
-        return y;
+        return this.y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 
     @Override
@@ -35,10 +43,10 @@ class Position {
 }
 
 class Neurone {
-    Position position;
-    double signal;
-    double facteur;
-    ArrayList<Neurone> connexions;
+    private Position position;
+    private double signal;
+    private double facteur;
+    private ArrayList<Neurone> connexions;
 
     public Neurone(Position position, double facteur){
         this.position = position;
@@ -57,6 +65,30 @@ class Neurone {
 
     public Neurone getConnexion(int index){
         return this.connexions.get(index);
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setSignal(double signal) {
+        this.signal = signal;
+    }
+
+    public double getFacteur() {
+        return this.facteur;
+    }
+
+    public void setFacteur(double facteur) {
+        this.facteur = facteur;
+    }
+
+    public ArrayList<Neurone> getConnexions() {
+        return this.connexions;
+    }
+
+    public void setConnexions(ArrayList<Neurone> connexions) {
+        this.connexions = connexions;
     }
 
     public double getAttenuation(){
@@ -104,7 +136,7 @@ class NeuroneCumulatif extends Neurone {
     }
 
     public void recoitStimulus(double stimulus){
-        this.signal = this.signal + stimulus * this.facteur;
+        this.setSignal(this.getSignal() + stimulus * this.getFacteur());
         this.propage();
     }
 }
@@ -130,24 +162,24 @@ class Cerveau {
     }
 
     public void stimuler(int index, double stimulus){
-        getNeurone(index).recoitStimulus(stimulus);
+        this.getNeurone(index).recoitStimulus(stimulus);
     }
 
     public double sonder(int index){
-        return getNeurone(index).getSignal();
+        return this.getNeurone(index).getSignal();
     }
 
     public void creerConnexions(){
         if(getNbNeurones() > 1) {
-            cerveau.get(0).connexion(cerveau.get(1));
+            this.cerveau.get(0).connexion(this.cerveau.get(1));
         }
         if (getNbNeurones() > 2) {
-            cerveau.get(0).connexion(cerveau.get(2));
+            this.cerveau.get(0).connexion(this.cerveau.get(2));
         }
         for(int i = 1; i <= getNbNeurones()-2; i ++){
             if( i%2 != 0){
-                cerveau.get(i).connexion(cerveau.get(i+1));
-                cerveau.get(i+1).connexion(cerveau.get(i+2));
+                this.cerveau.get(i).connexion(this.cerveau.get(i+1));
+                this.cerveau.get(i+1).connexion(this.cerveau.get(i+2));
             }
         }
     }
@@ -155,9 +187,9 @@ class Cerveau {
     @Override
     public String toString(){
 
-        String txt = "\n*----------*\n" + "Le cerveau contient " + getNbNeurones() + " neurone(s)\n";
-        for( int i=0; i < getNbNeurones(); i++){
-            txt = txt + cerveau.get(i).toString() + "\n";
+        String txt = "\n*----------*\n" + "Le cerveau contient " + this.getNbNeurones() + " neurone(s)\n";
+        for( int i=0; i < this.getNbNeurones(); i++){
+            txt = txt + this.cerveau.get(i).toString() + "\n";
         }
         return txt;
     }
