@@ -112,37 +112,39 @@ class Scrutin {
     }
 
     public void simuler(double tauxParticipation, int jourVote) {
-        int nombreVotants =  (int)(this.getPostulants().size() * tauxParticipation / 100);
-        ArrayList<Vote> tableauPostulants = new ArrayList<Vote>();
+        int nombreVotants =  (int)(this.getNombreMaxVotes() * tauxParticipation);
 
         for (int i=0; i < nombreVotants; i++){
 
-            int candNum = Utils.randomInt( this.getNombreMaxVotes() - 1);
+            int candNum = Utils.randomInt( this.getPostulants().size() - 1);
 
             if ( i%3 == 0){
                 BulletinElectronique bulletinElectronique = new BulletinElectronique(this.getPostulants().get(candNum).getNom(), jourVote, this.getDateScrutin());
-                tableauPostulants.add(bulletinElectronique);
+                this.getVotes().add(bulletinElectronique);
             }
 
             if ( i%3 == 1){
                 if (i%2 == 0) {
                     BulletinPapier bulletinPapier = new BulletinPapier(this.getPostulants().get(candNum).getNom(), jourVote, this.getDateScrutin(), true);
-                    tableauPostulants.add(bulletinPapier);
+                    this.getVotes().add(bulletinPapier);
                 }else {
                     BulletinPapier bulletinPapier = new BulletinPapier(this.getPostulants().get(candNum).getNom(), jourVote, this.getDateScrutin(), false);
-                    tableauPostulants.add(bulletinPapier);
+                    this.getVotes().add(bulletinPapier);
                 }
             }
 
             if ( i%3 == 2){
                 if (i%2 == 0){
                     BulletinCourrier bulletinCourrier = new BulletinCourrier(this.getPostulants().get(candNum).getNom(), jourVote, this.getDateScrutin(), true);
-                    tableauPostulants.add(bulletinCourrier);
+                    this.getVotes().add(bulletinCourrier);
                 }else{
                     BulletinCourrier bulletinCourrier = new BulletinCourrier(this.getPostulants().get(candNum).getNom(), jourVote, this.getDateScrutin(), false);
-                    tableauPostulants.add(bulletinCourrier);
+                    this.getVotes().add(bulletinCourrier);
                 }
             }
+        }
+        for (int i = 0; i < this.getVotes().size(); i++) {
+            System.out.format(this.getVotes().get(i).toString());
         }
     }
 
@@ -176,7 +178,7 @@ class Scrutin {
             System.out.format("Répartition des électeurs\n");
             for( Postulant postulant : this.getPostulants()){
                 System.out.format( postulant.getNom() + " -> %.1f", (double)postulant.getNbElecteurVotantPour() / this.calculerVotants()*100);
-                System.out.format(" pour cent des électeurs\n");
+                System.out.format(" pour cent des électeurs\n\n");
             }
         }
     }
@@ -281,9 +283,9 @@ class BulletinPapier extends Vote{
     @Override
     public String toString() {
         if(this.estInvalide()){
-            return "vote par bulletin papier pour " + this.getNomPostulant() + " -> invalide";
+            return "vote par bulletin papier pour " + this.getNomPostulant() + " -> invalide\n";
         }else{
-            return "vote par bulletin papier pour " + this.getNomPostulant() + " -> valide";
+            return "vote par bulletin papier pour " + this.getNomPostulant() + " -> valide\n";
         }
     }
 }
@@ -314,9 +316,9 @@ class BulletinElectronique extends Vote implements CheckBulletin{
     @Override
     public String toString() {
         if(this.estInvalide()){
-            return "vote electronique pour " + this.getNomPostulant() + " -> invalide";
+            return "vote electronique pour " + this.getNomPostulant() + " -> invalide\n";
         }else{
-            return "vote electronique pour " + this.getNomPostulant() + " -> valide";
+            return "vote electronique pour " + this.getNomPostulant() + " -> valide\n";
         }
     }
 }
@@ -328,7 +330,7 @@ class BulletinCourrier extends BulletinPapier implements CheckBulletin{
     }
 
     public boolean estInvalide(){
-        if(this.checkDate() && this.estInvalide()){
+        if(this.checkDate() && super.estInvalide()){
             return true;
         }else{
             return false;
@@ -347,9 +349,9 @@ class BulletinCourrier extends BulletinPapier implements CheckBulletin{
     @Override
     public String toString() {
         if(this.estInvalide()){
-            return "envoie par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> invalide";
+            return "envoie par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> invalide\n";
         }else{
-            return "envoie par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> valide";
+            return "envoie par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> valide\n";
         }
     }
 }
