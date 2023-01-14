@@ -104,6 +104,9 @@ class Moto extends Vehicule {
 	}
 
     public boolean estDeuxRoues(){
+        if(sidecar){
+            return false;
+        }
         return true;
     }
     
@@ -117,10 +120,9 @@ class GrandPrix extends Rallye{
     private ArrayList<Vehicule> vehicules = new ArrayList<>();
 
     public boolean check(){
-        boolean prevCheck = vehicules.get(1).estDeuxRoues();
+        boolean initCheck = vehicules.get(0).estDeuxRoues();
         for (int i = 1; i < vehicules.size(); i++) {
-            if (vehicules.get(i).estDeuxRoues() != prevCheck){
-                
+            if (vehicules.get(i).estDeuxRoues() != initCheck ){
                 return false;
             }
         }
@@ -138,7 +140,7 @@ class GrandPrix extends Rallye{
 	public void run(int tours) {
         int index = -1, max_carburant=0;
         if(check() == false){
-            System.out.println("Pas de Grand Prix");
+            System.out.println("Pas de Grand Prix\n");
             return;
         }
 
@@ -153,11 +155,11 @@ class GrandPrix extends Rallye{
         }
 
         if( index == -1){
-            System.out.println("Elimination de tous les vehicules");
+            System.out.println("Elimination de tous les vehicules\n");
             return;
         }
 
-        System.out.println("Le gagnant du grand prix est : "+vehicules.get(index).toString());
+        System.out.println("Le gagnant du grand prix est : \n"+vehicules.get(index).toString()+"\n");
 
 	}
 }
