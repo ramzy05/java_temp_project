@@ -1,5 +1,3 @@
-package Exo4;
-
 /***************
  * Completez le programme a partir d'ici.
  ***************/
@@ -12,17 +10,17 @@ class Vehicule {
 	private int carburant;
 
     public Vehicule(String name, double vitesse, int p, int nivCar) {
-		nom = name;
-        vitesseMax =vitesse;
-        poids = p;
-        carburant = nivCar;
+		this.nom = name;
+        this.vitesseMax =vitesse;
+        this.poids = p;
+        this.carburant = nivCar;
 	}
 
     public Vehicule() {
-        nom = "Anonyme";
-        vitesseMax =130;
-        poids = 1000;
-        carburant = 0;
+        this.nom = "Anonyme";
+        this.vitesseMax =130;
+        this.poids = 1000;
+        this.carburant = 0;
 	}
 
     public String getNom() {
@@ -38,7 +36,7 @@ class Vehicule {
     }
 
     public void setCarburant(int nivCar) {
-        carburant = nivCar;
+        this.carburant = nivCar;
     }
 
     public int getCarburant() {
@@ -49,7 +47,7 @@ class Vehicule {
 		return  nom +" -> vitesse max = " + vitesseMax +" km/h, poids = "+ poids + " kg";
 	}
 
-    public double performance() {
+    private double performance() {
 		return  vitesseMax/poids;
 	}
 
@@ -68,16 +66,17 @@ class Voiture extends Vehicule {
     
     public Voiture(String name, double vitesse, int p, int nivCar,String cat){
         super(name, vitesse, p, nivCar);
-        categorie = cat;
+        this.categorie = cat;
     }
 
 
     public String getCategorie() {
-        return categorie;
+        return this.categorie;
     }
 
+    @Override
     public String toString() {
-        return  super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg; Voiture de "+categorie;
+        return  super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg, Voiture de "+this.categorie;
        
 	}
 }
@@ -89,23 +88,21 @@ class Moto extends Vehicule {
         super(name, vitesse, p, nivCar);
     }
 
-    public Moto(String name, double vitesse, int p, int nivCar, boolean has_sidecar){
+    public Moto(String name, double vitesse, int p, int nivCar, boolean hasSidecar){
         super(name, vitesse, p, nivCar);
-        sidecar = has_sidecar;
+        this.sidecar = hasSidecar;
     }
 
+    @Override
     public String toString() {
-        if(sidecar == true){
-            return super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg, Moto, avec un sidecar";
+        if(this.sidecar == true){
+            return super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg, Moto, avec sidecar";
         }
         return super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg, Moto";
 	}
 
     public boolean estDeuxRoues(){
-        if(sidecar){
-            return false;
-        }
-        return true;
+        return !this.sidecar;
     }
     
 }
@@ -118,9 +115,9 @@ class GrandPrix extends Rallye{
     private ArrayList<Vehicule> vehicules = new ArrayList<>();
 
     public boolean check(){
-        boolean initCheck = vehicules.get(0).estDeuxRoues();
-        for (int i = 1; i < vehicules.size(); i++) {
-            if (vehicules.get(i).estDeuxRoues() != initCheck ){
+        boolean initCheck = this.vehicules.get(0).estDeuxRoues();
+        for (int i = 1; i < this.vehicules.size(); i++) {
+            if (this.vehicules.get(i).estDeuxRoues() != initCheck ){
                 return false;
             }
         }
@@ -129,26 +126,35 @@ class GrandPrix extends Rallye{
 
     public void ajouter(Vehicule option) {
 		if (option!= null) {
-			vehicules.add(option);
+			this.vehicules.add(option);
 		}
 
        
 	}
 
 	public void run(int tours) {
-        int index = -1, max_carburant=0;
+        int index = -1, maxCarburant=0, tmp=0;
+        ArrayList<Vehicule> vehiculesArrives = new ArrayList<>();
         if(check() == false){
             System.out.println("Pas de Grand Prix\n");
             return;
         }
 
-        vehicules.forEach((vehi) -> {
+        this.vehicules.forEach((vehi) -> {
             vehi.setCarburant(vehi.getCarburant() - tours);
         });
 
+        for (int i = 0; i < vehiculesArrives.size(); i++) {
+            tmp = vehiculesArrives.get(i).getCarburant() - tours;
+            if(tmp > 0){
+                vehiculesArrives.get(i).setCarburant(tmp);
+            }
+        }
+
         for (int i = 0; i < vehicules.size(); i++) {
-            if(vehicules.get(i).getCarburant() > max_carburant){
-                index = 0;
+            if(this.vehicules.get(i).getCarburant() > maxCarburant){
+                index = i;
+                maxCarburant = this.vehicules.get(i).getCarburant();
             }
         }
 
@@ -157,7 +163,7 @@ class GrandPrix extends Rallye{
             return;
         }
 
-        System.out.println("Le gagnant du grand prix est : \n"+vehicules.get(index).toString()+"\n");
+        System.out.println("Le gagnant du grand prix est : \n"+this.vehicules.get(index).toString()+"\n");
 
 	}
 }

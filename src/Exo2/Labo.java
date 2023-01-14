@@ -1,4 +1,3 @@
-package Exo2;
 class Souris {
 
     public static final int ESPERANCE_VIE_DEFAUT = 36;
@@ -25,7 +24,7 @@ class Souris {
         couleur = col;
         age = ag;
         esperanceVie = ESPERANCE_VIE_DEFAUT;
-        System.out.println("Une nouvelle souris");
+        System.out.println("Une nouvelle souris !");
     }
 
     public Souris(int pds, String col){
@@ -40,10 +39,8 @@ class Souris {
         poids = obj.poids;
         couleur = obj.couleur;
         age = obj.age;
-        esperanceVie = obj.esperanceVie/4;
+        esperanceVie = (obj.esperanceVie*4)/5;
         clonee = true;
-        System.out.println("Une nouvelle souris !");
-
     }
 
     public String toString(){

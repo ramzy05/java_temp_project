@@ -1,5 +1,3 @@
-package Exo4;
-
 /***************
  * Completez le programme a partir d'ici.
  ***************/
@@ -17,24 +15,24 @@ class OptionVoyage {
 	}
 
 	public String getNom() {
-        return option;
+        return this.option;
 	}
 
 	public double prix() {
-		return prix;
+		return this.prix;
 	}
 
 
 	public String toString() {
-		return  option + " -> " +""+prix() + " CHF";
+		return  this.option + " -> " +""+prix() + " CHF";
 	}
 
 	public String getOption() {
-		return option;
+		return this.option;
 	}
 
 	public double getPrix() {
-		return prix;
+		return this.prix;
 	}
 }
 
@@ -54,6 +52,7 @@ class Sejour extends OptionVoyage {
 		this.prixParNuit=prixParNuit;
 	}
 
+	@Override
 	public double prix() {
 		return this.nombreDeNuits * this.prixParNuit + super.prix();
 	}
@@ -64,17 +63,18 @@ class Sejour extends OptionVoyage {
 class Transport extends OptionVoyage {
 
 	private boolean trajetEstLong=false;// par defaut un transport a un trajet court.
-	public final double TARIF_LONG=1500.0;
-	public final double TARIF_BASE=200.0;
+	public static final double TARIF_LONG=1500.0;
+	public static final double TARIF_BASE=200.0;
 	public Transport(String op, double prix) {
 		super(op, prix);
 	}
 
-	public Transport(String op, double prix, boolean est_long) {
+	public Transport(String op, double prix, boolean estLong) {
 		super(op, prix);
-		  trajetEstLong = est_long;
+		trajetEstLong = estLong;
 	}
 
+	@Override
 	public double prix() {
 		if(trajetEstLong==true){
 			return TARIF_LONG + super.prix();
@@ -114,14 +114,14 @@ class KitVoyage {
 	}
 
 	public String toString() {
-		String tmp=null;
+		String tmp="";
 		double somme =0.0;
 		tmp="Voyage de "+depart +" à "+ destination + ", avec pour options :\n";
 		for (int i=0; i< getNbOptions(); i++) {
 			tmp += "   - " + options.get(i).getOption()+" -> "+options.get(i).getPrix()+ " CHF\n";
-			somme +=options.get(i).prix();
+			somme +=options.get(i).getPrix();
 		}
-		return tmp + "   Prix total : "+somme+" CH\n";
+		return tmp + "Prix total : "+somme+" CHF\n";
 	}
 
 	public void ajouterOption(OptionVoyage option) {

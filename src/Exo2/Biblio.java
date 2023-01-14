@@ -1,4 +1,3 @@
-package Exo2;
 import java.util.ArrayList;
 
 class Auteur {
@@ -10,9 +9,9 @@ class Auteur {
     private String nom;
     private boolean prix;
     
-    public Auteur(String name, boolean est_prime){
-        nom = name;
-        prix = est_prime;
+    public Auteur(String name, boolean estPrime){
+        this.nom = name;
+        this.prix = estPrime;
     }
 
     public String getNom() {
@@ -33,15 +32,15 @@ class Oeuvre
      private String langue;
 
      public Oeuvre(String title, Auteur autor, String lang){
-        titre = title;
-        auteur = autor;
-        langue = lang;
+        this.titre = title;
+        this.auteur = autor;
+        this.langue = lang;
      }
 
      public Oeuvre(String title, Auteur autor){
-        titre = title;
-        auteur = autor;
-        langue = "francais";
+        this.titre = title;
+        this.auteur = autor;
+        this.langue = "francais";
      }
 
      public String getTitre() {
@@ -72,7 +71,7 @@ class Exemplaire{
 
     public Exemplaire(Exemplaire autre){
         oeuvre = autre.oeuvre;
-        System.out.println("Copie d'un exemplaire -> " + autre.oeuvre.getTitre()+", "+autre.oeuvre.getAuteur().getNom()+", en "+autre.oeuvre.getLangue());
+        System.out.println("Copie d'un exemplaire de -> " + autre.oeuvre.getTitre()+", "+autre.oeuvre.getAuteur().getNom()+", en "+autre.oeuvre.getLangue());
     }
   
     public void afficher() {
@@ -136,10 +135,10 @@ class Bibliotheque{
         return compteur;
     }
 
-    public void afficherAuteur(boolean ayant_prix){
+    public void afficherAuteur(boolean ayantPrix){
         exemplaires.forEach(exemp ->{
                 
-            if(exemp.getOeuvre().getAuteur().getPrix() == ayant_prix){
+            if(exemp.getOeuvre().getAuteur().getPrix() == ayantPrix){
                 System.out.println(exemp.getOeuvre().getAuteur().getNom());
             }
         });
@@ -170,7 +169,7 @@ public class Biblio {
     public static void afficherExemplaires(ArrayList<Exemplaire> exemplaires) {
         for (Exemplaire exemplaire : exemplaires) {
             System.out.print("\t");
-            exemplaire.afficher();;
+            exemplaire.afficher();
         }
     }
 
