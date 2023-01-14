@@ -7,15 +7,150 @@ class Auteur {
      * Completez le programme a partir d'ici.
      *******************************************/
 	// Completer la classe Auteur ici
+    private String nom;
+    private boolean prix;
+    
+    public Auteur(String name, boolean is_prime){
+        nom = name;
+        prix = is_prime;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public Boolean getPrix() {
+        return prix;
+    }
+
 }
 
 class Oeuvre
 {
  	// Completer la classe Oeuvre ici
+     private String titre;
+     private Auteur auteur;
+     private String langue;
+
+     public Oeuvre(String title, Auteur autor, String lang){
+        titre = title;
+        auteur = autor;
+        langue = lang;
+     }
+
+     public Oeuvre(String title, Auteur autor){
+        titre = title;
+        auteur = autor;
+        langue = "français";
+     }
+
+     public String getTitre() {
+         return titre;
+     }
+
+     public Auteur getAuteur() {
+         return auteur;
+     }
+
+     public String getLangue() {
+         return langue;
+     }
 }
 
 // completer les autres classes ici
+class Exemplaire{
+    private Oeuvre oeuvre;
 
+    public Exemplaire(Oeuvre obj){
+        oeuvre = obj;
+        System.out.println("Nouvel exemplaire -> " + obj.getTitre()+", "+obj.getAuteur()+", en "+obj.getLangue());
+    }
+    
+    // Exemplaire(Oeuvre obj){
+        //     ref = obj;
+        //     System.out.println("Nouvel exemplaire -> " + obj.getTitre()+", en "+obj.getLangue());
+        // } 
+        
+    public void afficher() {
+        System.out.println("Nouvel exemplaire -> " + oeuvre.getTitre()+", "+oeuvre.getAuteur()+", en "+oeuvre.getLangue());
+    }
+
+    public Oeuvre getOeuvre() {
+        return oeuvre;
+    }
+}
+
+class Bibliotheque{
+    private String nom;
+    private ArrayList<Exemplaire> exemplaires = new ArrayList<>();
+    public Bibliotheque(String name){
+        nom = name;
+        System.out.println("La bibliothèque "+nom+" est ouverte\n");
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getNbExemplaires() {
+        return exemplaires.size();
+    }
+
+    public void stocker (Oeuvre obj,int n){
+        for (int i = 1; i < n; i++) {
+            exemplaires.add(new Exemplaire(obj));
+        }
+    }
+    
+    public void stocker (Oeuvre obj){
+        
+        exemplaires.add(new Exemplaire(obj));
+    }
+    
+    public  ArrayList<Exemplaire> listerExemplaires(String lang){
+        ArrayList<Exemplaire> exemplairesFiltres = new ArrayList<>();
+
+        for (Exemplaire exemplaire : exemplaires) {
+            if(exemplaire.getOeuvre().getLangue() == lang){
+                exemplairesFiltres.add(exemplaire);
+            }
+        }
+        return exemplairesFiltres;
+    }
+    
+    public  ArrayList<Exemplaire> listerExemplaires(){
+        return exemplaires;
+    }
+
+    public int compterExemplaires(Oeuvre obj){
+        int compteur = 0;
+        for (Exemplaire exemplaire : exemplaires) {
+            if(exemplaire.getOeuvre() == obj){
+                compteur++;
+            }
+        }
+        return compteur;
+    }
+
+    public void afficherAuteur(boolean ayant_prix){
+        exemplaires.forEach(exemp ->{
+                
+            if(exemp.getOeuvre().getAuteur().getPrix() == ayant_prix){
+                System.out.println(exemp.getOeuvre().getAuteur().getNom()+"\n");
+            }
+        });
+    }
+
+    public void afficherAuteur(){
+        exemplaires.forEach(exemp ->{
+            if(exemp.getOeuvre().getAuteur().getPrix() == true){
+                System.out.println(exemp.getOeuvre().getAuteur().getNom()+"\n");
+            }
+        });
+        
+    }
+   
+}
 
 /*******************************************
  * Ne rien modifier apres cette ligne.
