@@ -121,7 +121,7 @@ class KitVoyage {
 			tmp += "   - " + options.get(i).getOption()+" -> "+options.get(i).getPrix()+ " CHF\n";
 			somme +=options.get(i).prix();
 		}
-		return tmp + "   Prix total : "+somme+" CH";
+		return tmp + "   Prix total : "+somme+" CH\n";
 	}
 
 	public void ajouterOption(OptionVoyage option) {
