@@ -17,7 +17,7 @@ class Souris {
         couleur = col;
         age = ag;
         esperanceVie = ev;
-        System.out.println("Une nouvelle souris");
+        System.out.println("Une nouvelle souris !");
     }
 
     public Souris(int pds, String col, int ag){

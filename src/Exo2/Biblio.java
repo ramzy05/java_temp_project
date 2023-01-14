@@ -41,7 +41,7 @@ class Oeuvre
      public Oeuvre(String title, Auteur autor){
         titre = title;
         auteur = autor;
-        langue = "français";
+        langue = "francais";
      }
 
      public String getTitre() {
@@ -72,7 +72,7 @@ class Exemplaire{
 
     public Exemplaire(Exemplaire autre){
         oeuvre = autre.oeuvre;
-        System.out.println("Copie d'exemplaire -> " + autre.oeuvre.getTitre()+", "+autre.oeuvre.getAuteur().getNom()+", en "+autre.oeuvre.getLangue());
+        System.out.println("Copie d'un exemplaire -> " + autre.oeuvre.getTitre()+", "+autre.oeuvre.getAuteur().getNom()+", en "+autre.oeuvre.getLangue());
     }
   
     public void afficher() {
