@@ -1,1 +1,5 @@
 .vscode
+.idea
+out
+Specifications
+java_temp_project.iml

@@ -86,7 +86,7 @@ class Neurone {
 
     @Override
     public String toString(){
-        String txt = "Le neurone en position " + position.toString() + " avec attenuation " + this.facteur + " en connexion\n";
+        String txt = "Le neurone en position " + position.toString() + " avec attenuation " + this.facteur + " en connexion avec\n";
         if(this.getNbConnexions() != 0){
             for(Neurone n : this.connexions)
                 txt = txt + "- un neurone en position " + n.position.toString() + "\n";
@@ -111,6 +111,10 @@ class NeuroneCumulatif extends Neurone {
 
 class Cerveau {
     private ArrayList<Neurone> cerveau;
+
+    public Cerveau(){
+        this.cerveau = new ArrayList<Neurone>();
+    }
 
     public int getNbNeurones(){
         return this.cerveau.size();
@@ -140,7 +144,27 @@ class Cerveau {
         if (getNbNeurones() > 2) {
             cerveau.get(0).connexion(cerveau.get(2));
         }
+        for(int i = 1; i <= getNbNeurones()-2; i ++){
+            if( i%2 != 0){
+                cerveau.get(i).connexion(cerveau.get(i+1));
+                cerveau.get(i+1).connexion(cerveau.get(i+2));
+            }
+        }
+    }
 
+    @Override
+    public String toString(){
+
+        String txt = "\n*----------*\n" + "Le cerveau contient " + getNbNeurones() + " neurone(s)\n";
+        for( int i=0; i < getNbNeurones(); i++){
+            txt = txt + cerveau.get(i).toString() + "\n";
+        }
+        return txt;
+    }
+
+    public void ajouterNeuroneCumulatif(Position pos, double attenuation) {
+        NeuroneCumulatif neuroneCumulatif = new NeuroneCumulatif(pos, attenuation);
+        this.cerveau.add(neuroneCumulatif);
     }
 }
 
