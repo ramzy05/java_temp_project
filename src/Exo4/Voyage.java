@@ -9,9 +9,7 @@ import java.util.List;
 class OptionVoyage {
 
 	private String option;
-
 	private double prix;
-
 
 	public OptionVoyage(String op, double prix) {
 		this.option=op;
@@ -29,23 +27,26 @@ class OptionVoyage {
 
 
 	public String toString() {
-		return "<nom> ->"+option +"prix:"+prix;
+		return  option + " -> " +""+prix() + " CHF";
 	}
 
+	public String getOption() {
+		return option;
+	}
 
+	public double getPrix() {
+		return prix;
+	}
 }
 
 
 class Sejour extends OptionVoyage {
 
 	private int nombreDeNuits;
-
 	private double prixParNuit;
 
 	public Sejour(String op, double prix) {
-
 		super(op, prix);
-
 	}
 
 	public Sejour(String nom, double prix, int nombre, double prixParNuit) {
@@ -54,7 +55,7 @@ class Sejour extends OptionVoyage {
 		this.prixParNuit=prixParNuit;
 	}
 
-	public double prixSejour() {
+	public double prix() {
 		return this.nombreDeNuits * this.prixParNuit + super.prix();
 	}
 
@@ -63,45 +64,25 @@ class Sejour extends OptionVoyage {
 
 class Transport extends OptionVoyage {
 
-	private boolean TypeDuTrajet=false;// par defaut un transport a un trajet court.
-
+	private boolean trajetEstLong=false;// par defaut un transport a un trajet court.
 	public final double TARIF_LONG=1500.0;
-
 	public final double TARIF_BASE=200.0;
-
-	public double prix;
-
-
-	public Transport(String op, double prix, boolean est_long) {
-		super(op, prix);
-        // TypeDuTrajet = est_long;
-		if(!est_long) {
-			TypeDuTrajet=est_long;
-		}
-		else{
-			TypeDuTrajet= !est_long;
-		}
-
-	}
-
 	public Transport(String op, double prix) {
 		super(op, prix);
 	}
 
-	public boolean Trajet() {
-		if(!TypeDuTrajet) {
-			return true;
+	public Transport(String op, double prix, boolean est_long) {
+		super(op, prix);
+		  trajetEstLong = est_long;
+	}
+
+	public double prix() {
+		if(trajetEstLong==true){
+			return TARIF_LONG + super.prix();
 		}
-		return false;
-
+			return TARIF_BASE + super.prix();
 	}
-
-	public void setTrajetLong() {
-		this.TypeDuTrajet=true;
-		prix=this.TARIF_LONG;
-	}
-
-
+	
 }
 
 class KitVoyage {
@@ -134,37 +115,24 @@ class KitVoyage {
 	}
 
 	public String toString() {
-		String erg=null;
+		String tmp=null;
 		double somme =0.0;
-
-		for (int i=0; i< list.size(); i++) {
-			erg="Voyage de < "+depart +"> a "+"<"+destination+">, avec pour Options :"+"/n"+
-
-		"<nom Option"+i+"> "+"->"+"< prix Option"+i+"> CHF"+"/n"+ "Prix Total :";
-
+		tmp="Voyage de "+depart +" à "+ destination + ", avec pour options :\n";
+		for (int i=0; i< getNbOptions(); i++) {
+			tmp += "   - " + list.get(i).getOption()+" -> "+list.get(i).getPrix()+ " CHF\n";
 			somme +=list.get(i).prix();
 		}
-
-		return erg + "<Prix du Kit> "+somme;
-		
+		return tmp + "   Prix total : "+somme+" CH";
 	}
 
-	public void ajouterOption(OptionVoyage o) {
-
-		if (o!= null) {
-
-			list.add(o);
-
+	public void ajouterOption(OptionVoyage option) {
+		if (option!= null) {
+			list.add(option);
 		}
-
-		
-
 	}
 
 	public void annuler() {
-
 		list.clear();
-
 	}
 
 	public int getNbOptions() {
