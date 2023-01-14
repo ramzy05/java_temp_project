@@ -1,7 +1,5 @@
 package Exo4;
 
-import java.lang.reflect.Constructor;
-
 /***************
  * Completez le programme a partir d'ici.
  ***************/
