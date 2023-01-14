@@ -6,11 +6,12 @@ class Patient{
     private double hauteur;
 
     public  void init(double poids, double taille){
-        if(poids > 0){
+        if(poids > 0 && taille > 0){
             this.masse = poids;
-        }
-        if(taille > 0){
             this.hauteur = taille;
+        } else {
+            this.masse = 0;
+            this.hauteur = 0;
         }
     }
 
