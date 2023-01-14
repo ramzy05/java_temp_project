@@ -55,6 +55,10 @@ class Oeuvre
      public String getLangue() {
          return langue;
      }
+
+     public void afficher() {
+        System.out.println(titre+", "+auteur.getNom()+", en "+langue);
+    }
 }
 
 // completer les autres classes ici
@@ -64,6 +68,11 @@ class Exemplaire{
     public Exemplaire(Oeuvre obj){
         oeuvre = obj;
         System.out.println("Nouvel exemplaire -> " + obj.getTitre()+", "+obj.getAuteur().getNom()+", en "+obj.getLangue());
+    }
+
+    public Exemplaire(Exemplaire autre){
+        oeuvre = autre.oeuvre;
+        System.out.println("Copie d'exemplaire -> " + autre.oeuvre.getTitre()+", "+autre.oeuvre.getAuteur().getNom()+", en "+autre.oeuvre.getLangue());
     }
   
     public void afficher() {
@@ -161,7 +170,7 @@ public class Biblio {
     public static void afficherExemplaires(ArrayList<Exemplaire> exemplaires) {
         for (Exemplaire exemplaire : exemplaires) {
             System.out.print("\t");
-            exemplaire.afficher();
+            exemplaire.afficher();;
         }
     }
 

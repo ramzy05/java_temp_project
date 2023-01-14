@@ -12,6 +12,14 @@ class Souris {
     private int esperanceVie;
     private boolean clonee = false;
 
+    public Souris(int pds, String col, int ag, int ev){
+        poids = pds;
+        couleur = col;
+        age = ag;
+        esperanceVie = ev;
+        System.out.println("Une nouvelle souris");
+    }
+
     public Souris(int pds, String col, int ag){
         poids = pds;
         couleur = col;
@@ -43,7 +51,7 @@ class Souris {
         return "Une souris "+couleur+ tmp +" de " + age +" mois et pesant "+ poids +" grammes";
     }
 
-    public void veillir(){
+    public void vieillir(){
         age += 1;
         if(clonee){
             if(age > esperanceVie/2){
@@ -54,7 +62,7 @@ class Souris {
 
     public void evolue(){
         while (age < esperanceVie) {
-            veillir();
+            vieillir();
         }
     }
 }
