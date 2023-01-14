@@ -65,12 +65,7 @@ class Exemplaire{
         oeuvre = obj;
         System.out.println("Nouvel exemplaire -> " + obj.getTitre()+", "+obj.getAuteur().getNom()+", en "+obj.getLangue());
     }
-    
-    // Exemplaire(Oeuvre obj){
-        //     ref = obj;
-        //     System.out.println("Nouvel exemplaire -> " + obj.getTitre()+", en "+obj.getLangue());
-        // } 
-        
+  
     public void afficher() {
         System.out.println("Un exemplaire de " + oeuvre.getTitre()+", "+oeuvre.getAuteur().getNom()+", en "+oeuvre.getLangue());
     }
