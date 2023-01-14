@@ -50,10 +50,10 @@ class Timbre {
 
     public double vente(){
         int age = this.age();
-        if( age< 5)
+        if( age< 5){
             return this.valeurFaciale;
-        else
-            return this.valeurFaciale * age * 2.5;
+        }
+        return this.valeurFaciale * age * 2.5;
     }
 
     public int age(){
@@ -61,7 +61,7 @@ class Timbre {
     }
 
     public String toString(){
-        return "Timbre de code "+ this.getCode() + " datant de " + this.getAnnee() + " (provenance " + this.getPays() + ") ayant pour valeur faciale " + this.getValeurFaciale() + " francs";
+        return "Timbre de code "+ this.getCode() + " datant de  " + this.getAnnee() + " (provenance " + this.getPays() + ") ayant pour valeur faciale " + this.getValeurFaciale() + " francs";
     }
 
     public String getCode(){
@@ -113,20 +113,20 @@ class Rare extends Timbre{
     }
 
     public String toString(){
-        return super.toString() + "\n" + "Nombre d’exemplaires -> " + this.getExemplaires();
+        return super.toString() + "\n" + "Nombre d'exemplaires -> " + this.getExemplaires();
     }
 
     public double vente(){
         int exemplaires = this.getExemplaires();
-        double prix_base;
-        if(exemplaires < 100)
-            prix_base = super.PRIX_BASE_1;
-        else if(exemplaires >= 100 && exemplaires < 1000)
-            prix_base = super.PRIX_BASE_2;
-        else
-            prix_base = super.PRIX_BASE_3;
-
-        return prix_base * ( super.age() / 10.0);
+        double prixBase;
+        if(exemplaires < 100){
+            prixBase = super.PRIX_BASE_1;
+        }else if(exemplaires >= 100 && exemplaires < 1000){
+            prixBase = super.PRIX_BASE_2;
+        }else{
+            prixBase = super.PRIX_BASE_3;
+        }
+        return prixBase * ( super.age() / 10.0);
     }
 }
 
@@ -192,3 +192,4 @@ class Philatelie {
         }
     }
 }
+
