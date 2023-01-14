@@ -5,7 +5,6 @@ package Exo4;
  ***************/
 import java.util.ArrayList;
 
-import java.util.List;
 class OptionVoyage {
 
 	private String option;
@@ -91,7 +90,7 @@ class KitVoyage {
 
 	private String destination;
 
-	private List<OptionVoyage> list= new ArrayList<>();
+	private ArrayList<OptionVoyage> options= new ArrayList<>();
 
 	
 
@@ -107,7 +106,7 @@ class KitVoyage {
 
 		double resultat=0.0;
 
-		for( OptionVoyage o: list) {
+		for( OptionVoyage o: options) {
 			resultat += o.prix();
 		}
 
@@ -119,24 +118,24 @@ class KitVoyage {
 		double somme =0.0;
 		tmp="Voyage de "+depart +" à "+ destination + ", avec pour options :\n";
 		for (int i=0; i< getNbOptions(); i++) {
-			tmp += "   - " + list.get(i).getOption()+" -> "+list.get(i).getPrix()+ " CHF\n";
-			somme +=list.get(i).prix();
+			tmp += "   - " + options.get(i).getOption()+" -> "+options.get(i).getPrix()+ " CHF\n";
+			somme +=options.get(i).prix();
 		}
 		return tmp + "   Prix total : "+somme+" CH";
 	}
 
 	public void ajouterOption(OptionVoyage option) {
 		if (option!= null) {
-			list.add(option);
+			options.add(option);
 		}
 	}
 
 	public void annuler() {
-		list.clear();
+		options.clear();
 	}
 
 	public int getNbOptions() {
-		return list.size();
+		return options.size();
 	}
 }
 /***************

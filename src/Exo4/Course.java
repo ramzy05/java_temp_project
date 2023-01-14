@@ -1,9 +1,166 @@
 package Exo4;
 
+import java.lang.reflect.Constructor;
+
 /***************
  * Completez le programme a partir d'ici.
  ***************/
+import java.util.ArrayList;
 
+class Vehicule {
+    private String nom;
+	private double vitesseMax;
+	private int poids;
+	private int carburant;
+
+    public Vehicule(String name, double vitesse, int p, int nivCar) {
+		nom = name;
+        vitesseMax =vitesse;
+        poids = p;
+        carburant = nivCar;
+	}
+
+    public Vehicule() {
+        nom = "Anonyme";
+        vitesseMax =130;
+        poids = 1000;
+        carburant = 0;
+	}
+
+    public String getNom() {
+        return nom;
+    }
+
+    public double getVitesseMax() {
+        return vitesseMax;
+    }
+
+    public int getPoids() {
+        return poids;
+    }
+
+    public void setCarburant(int nivCar) {
+        carburant = nivCar;
+    }
+
+    public int getCarburant() {
+        return carburant;
+    }
+
+    public String toString() {
+		return  nom +" -> vitesse max = " + vitesseMax +" km/h, poids = "+ poids + " kg";
+	}
+
+    public double performance() {
+		return  vitesseMax/poids;
+	}
+
+    public boolean meilleur(Vehicule autreVehicule) {
+		return  performance() > autreVehicule.performance();
+	}
+
+    public boolean estDeuxRoues(){
+        return false;
+    }
+}
+
+
+class Voiture extends Vehicule {
+    private String categorie;
+    
+    public Voiture(String name, double vitesse, int p, int nivCar,String cat){
+        super(name, vitesse, p, nivCar);
+        categorie = cat;
+    }
+
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public String toString() {
+        return  super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg; Voiture de "+categorie;
+       
+	}
+}
+
+class Moto extends Vehicule {
+    private boolean sidecar = false;
+
+    public Moto(String name, double vitesse, int p, int nivCar){
+        super(name, vitesse, p, nivCar);
+    }
+
+    public Moto(String name, double vitesse, int p, int nivCar, boolean has_sidecar){
+        super(name, vitesse, p, nivCar);
+        sidecar = has_sidecar;
+    }
+
+    public String toString() {
+        if(sidecar == true){
+            return super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg, Moto, avec un sidecar";
+        }
+        return super.getNom() +" -> vitesse max = " + super.getVitesseMax() +" km/h, poids = "+ super.getPoids() + " kg, Moto";
+	}
+
+    public boolean estDeuxRoues(){
+        return true;
+    }
+    
+}
+
+abstract class Rallye{
+    public abstract boolean check();
+}
+
+class GrandPrix extends Rallye{
+    private ArrayList<Vehicule> vehicules = new ArrayList<>();
+
+    public boolean check(){
+        boolean prevCheck = vehicules.get(1).estDeuxRoues();
+        for (int i = 1; i < vehicules.size(); i++) {
+            if (vehicules.get(i).estDeuxRoues() != prevCheck){
+                
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void ajouter(Vehicule option) {
+		if (option!= null) {
+			vehicules.add(option);
+		}
+
+       
+	}
+
+	public void run(int tours) {
+        int index = -1, max_carburant=0;
+        if(check() == false){
+            System.out.println("Pas de Grand Prix");
+            return;
+        }
+
+        vehicules.forEach((vehi) -> {
+            vehi.setCarburant(vehi.getCarburant() - tours);
+        });
+
+        for (int i = 0; i < vehicules.size(); i++) {
+            if(vehicules.get(i).getCarburant() > max_carburant){
+                index = 0;
+            }
+        }
+
+        if( index == -1){
+            System.out.println("Elimination de tous les vehicules");
+            return;
+        }
+
+        System.out.println("Le gagnant du grand prix est : "+vehicules.get(index).toString());
+
+	}
+}
 /***************
  * Ne pas modifier apres cette ligne
  * pour pr'eserver les fonctionnalit'es et
