@@ -1,6 +1,3 @@
-package Exo6;
-
-
 /*******************************************
  * Completez le programme a partir d'ici.
  *******************************************/
@@ -15,7 +12,7 @@ import java.util.Scanner;
 //"  A corrigé "
 //"  A mené à bien "
 class Employe {
-    private String nom;
+    private final String nom;
     private int revenuMensuel;
     private int tauxOccupation;
     private double montantPrime = 0.0;
@@ -59,10 +56,6 @@ class Employe {
         return this.nom + " :\n" + "  Taux d'occupation : " + this.tauxOccupation + "%.";
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public void setRevenuMensuel(int revenuMensuel) {
         this.revenuMensuel = revenuMensuel;
     }
@@ -92,7 +85,7 @@ class Employe {
     }
 
     public double revenuAnnuel(){
-        return 12*this.revenuMensuel + this.montantPrime;
+        return 12*this.revenuMensuel * this.tauxOccupation;
     }
 
 }
