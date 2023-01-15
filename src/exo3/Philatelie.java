@@ -50,10 +50,12 @@ class Timbre {
 
     public double vente(){
         int age = this.age();
-        if( age< 5)
+        if( age< 5){
             return this.valeurFaciale;
-        else
+        }
+        else{
             return this.valeurFaciale * age * 2.5;
+        }
     }
 
     public int age(){
@@ -119,12 +121,15 @@ class Rare extends Timbre{
     public double vente(){
         int exemplaires = this.getExemplaires();
         double prix_base;
-        if(exemplaires < 100)
+        if(exemplaires < 100){
             prix_base = super.PRIX_BASE_1;
-        else if(exemplaires >= 100 && exemplaires < 1000)
+        }
+        else if(exemplaires >= 100 && exemplaires < 1000){
             prix_base = super.PRIX_BASE_2;
-        else
+        }
+        else{
             prix_base = super.PRIX_BASE_3;
+        }
 
         return prix_base * ( super.age() / 10.0);
     }
@@ -159,6 +164,7 @@ class Commemoratif extends Timbre{
         return 2 * super.vente();
     }
 }
+
 /*******************************************
  * Ne rien modifier apres cette ligne.
  *******************************************/

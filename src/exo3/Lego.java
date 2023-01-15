@@ -5,7 +5,7 @@
 import java.util.ArrayList;
 
 class Piece{
-    protected String nom;
+    private String nom;
 
     public Piece(String nom){
         this.nom = nom;
@@ -56,8 +56,9 @@ class Simple extends Piece{
 
     public String toString(){
         String finalString = super.getNom();
-        if(!this.orientation.equals("aucune"))
+        if(!this.orientation.equals("aucune")){
             finalString = finalString + " " + this.getOrientation();
+        }
         return finalString;
     }
 }
