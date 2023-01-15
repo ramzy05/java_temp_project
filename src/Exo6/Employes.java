@@ -12,7 +12,7 @@ import java.util.Scanner;
 //"  A corrigé "
 //"  A mené à bien "
 class Employe {
-    private String nom;
+    private final String nom;
     private double revenuMensuel;
     private int tauxOccupation=100;
     private double montantPrime = 0.0;
@@ -54,6 +54,7 @@ class Employe {
             keyboard.nextLine();
             chance --;
         }while (chance > 0);
+        keyboard.close();
     }
 
     public String toString(){
@@ -64,7 +65,7 @@ class Employe {
         this.nom = nom;
     }
 
-    public void setRevenuMensuel(int revenuMensuel) {
+    public void setRevenuMensuel(double revenuMensuel) {
         this.revenuMensuel = revenuMensuel;
     }
 
@@ -93,7 +94,7 @@ class Employe {
     }
 
     public double revenuAnnuel(){
-        return 12*this.revenuMensuel + this.montantPrime;
+        return (12*this.revenuMensuel*this.tauxOccupation)/100 + this.montantPrime;
     }
 
 }
@@ -122,9 +123,9 @@ class Manager extends Employe{
     @Override
     public String toString(){
         if(this.getMontantPrime() != 0){
-            return "Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " nouveaux clients";
+            return "Taux d'occupation : " + this.getTauxOccupation()+"%. Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " nouveaux clients.";
         }else{
-            return "Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " nouveaux clients";
+            return "Taux d'occupation : " + this.getTauxOccupation()+"%. Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " nouveaux clients.";
         }
     }
     
@@ -168,9 +169,9 @@ class Testeur extends Employe {
     @Override
     public String toString(){
         if (this.getMontantPrime() != 0){
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs.";
+            return "Taux d'occupation : " + this.getTauxOccupation()+"%. Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs.";
         }else{
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs.";
+            return "Taux d'occupation : " + this.getTauxOccupation()+"%. Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs.";
         }
     }
 

@@ -1,9 +1,13 @@
+/*******************************************
+ * Completez le programme a partir d'ici.
+ *******************************************/
+//"vote électronique"
+//System.out.println("Scrutin annulé, pas de votants");
+//"Répartition des électeurs "
+//" -> %.1f pour cent des électeurs\n"
 import java.util.ArrayList;
 import java.util.Random;
 
-/*******************************************
- * Completez le programme Ã  partir d'ici.
- *******************************************/
 class Postulant {
     private String nom;
     private int nbElecteurVotantPour = 0;
@@ -11,10 +15,6 @@ class Postulant {
     public Postulant(String nom, int nbElecteurVotantPour){
         this.nom = nom;
         this.nbElecteurVotantPour = nbElecteurVotantPour;
-    }
-
-    Postulant(String nom){
-        this.nom = nom;
     }
 
     Postulant(Postulant postulant){
@@ -97,7 +97,7 @@ class Scrutin {
 
     public void compterVotes(){
         for (Vote vote : this.getVotes()) {
-            if(!vote.estInvalide()){
+            if(vote.estValide()){
                 this.getPostulants().forEach(
                     postulant -> {
                         if(postulant.getNom() == vote.getNomPostulant()){
@@ -113,6 +113,7 @@ class Scrutin {
         int nombreVotants =  (int)(this.getNombreMaxVotes() * tauxParticipation);
 
         for (int i=0; i < nombreVotants; i++){
+            Random()
             int candNum = Utils.randomInt( this.getPostulants().size() - 1);
             if ( i%3 == 0){
                 BulletinElectronique bulletinElectronique = new BulletinElectronique(this.getPostulants().get(candNum).getNom(), jourVote, this.getDateScrutin());
@@ -212,7 +213,7 @@ class Scrutin {
     }
 }
 
-abstract class Vote {
+class Vote {
     private String nomPostulant;
     private int date;
     private int dateLimite;
@@ -226,7 +227,7 @@ abstract class Vote {
     public String getNomPostulant() {
         return this.nomPostulant;
     }
-    
+
     public void setNomPostulant(String nomPostulant) {
         this.nomPostulant = nomPostulant;
     }
@@ -246,18 +247,10 @@ abstract class Vote {
     public void setDateLimite(int dateLimite) {
         this.dateLimite = dateLimite;
     }
-    
-    public abstract boolean estInvalide();
 
-    public String getPostulant() {
-        return this.nomPostulant;
+    public boolean estValide(){
+        return true;
     }
-
-    public String toString(){
-        String str = estInvalide() ? "invalide" : "valide";
-        return " pour "+this.nomPostulant+" -> "+str;
-    }
-    
 }
 
 class BulletinPapier extends Vote{
@@ -273,11 +266,15 @@ class BulletinPapier extends Vote{
     }
 
     public boolean isEstSigne() {
-        return this.estSigne;
+        return estSigne;
     }
 
     public boolean estInvalide(){
-        return !this.isEstSigne();
+        if(this.isEstSigne()){
+            return false;
+        }else {
+            return true;
+        }
     }
 
     @Override
@@ -298,11 +295,19 @@ class BulletinElectronique extends Vote implements CheckBulletin{
 
     @Override
     public boolean checkDate() {
-        return this.getDate() <= this.getDateLimite() - 2;
+        if(this.getDate() > this.getDateLimite() - 2){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean estInvalide(){
-        return !checkDate();
+        if(this.checkDate()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -321,22 +326,29 @@ class BulletinCourrier extends BulletinPapier implements CheckBulletin{
         super(nomPostulant, date, dateLimite, estSigne);
     }
 
-    @Override
     public boolean estInvalide(){
-        return !this.checkDate() || !super.isEstSigne();
+        if(this.checkDate() && super.estInvalide()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
     public boolean checkDate() {
-        return this.getDate() <= this.getDateLimite();
+        if(this.getDate() > this.getDateLimite() - 2){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
     public String toString() {
         if(this.estInvalide()){
-            return "envoi par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> invalide\n";
+            return "envoie par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> invalide\n";
         }else{
-            return "envoi par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> valide\n";
+            return "envoie par courrier d'un vote par bulletin papier pour " + this.getNomPostulant() + " -> valide\n";
         }
     }
 }
@@ -344,79 +356,36 @@ class BulletinCourrier extends BulletinPapier implements CheckBulletin{
 interface CheckBulletin {
     boolean checkDate();
 }
+
 /*******************************************
- * Ne pas modifier les parties fournies
- * pour pr'eserver les fonctionnalit'es et
- * le jeu de test fourni.
- * Votre programme sera test'e avec d'autres
- * donn'ees.
+ * Ne rien modifier apres cette ligne.
  *******************************************/
+class Employes {
+    public static void main(String[] args) {
 
-class Utils {
+        List<Employe> staff = new ArrayList<Employe>();
 
-    private static final Random RANDOM = new Random();
+        // TEST PARTIE 1:
 
-    // NE PAS UTILISER CETTE METHODE DANS LES PARTIES A COMPLETER
-    public static void setSeed(long seed) {
-        RANDOM.setSeed(seed);
-    }
+        System.out.println("Test partie 1 : ");
+        staff.add(new Manager("Serge Legrand", 7456, 30, 4 ));
+        staff.add(new Programmeur("Paul Lepetit" , 6456, 3, 75 ));
+        staff.add(new Testeur("Pierre Lelong", 5456, 124, 50 ));
 
-    // gÃ©nÃ¨re un entier entre 0 et max (max non compris)
-    public static int randomInt(int max) {
-        return RANDOM.nextInt(max);
-    }
-}
+        System.out.println("Affichage des employÃ©s : ");
+        for (Employe modele : staff) {
+            System.out.println(modele);
+        }
+        // FIN TEST PARTIE 1
+        // TEST PARTIE 2
+        System.out.println("Test partie 2 : ");
 
-/**
- * Classe pour tester la simulation
- */
+        staff.get(0).demandePrime();
 
-class Votation {
+        System.out.println("Affichage aprÃ¨s demande de prime : ");
+        System.out.println(staff.get(0));
 
-    public static void main(String args[]) {
-        Utils.setSeed(20000);
-        // TEST 1
-        System.out.println("Test partie I:");
-        System.out.println("--------------");
-
-        ArrayList<Postulant> postulants = new ArrayList<Postulant>();
-        postulants.add(new Postulant("Tarek Oxlama", 2));
-        postulants.add(new Postulant("Nicolai Tarcozi", 3));
-        postulants.add(new Postulant("Vlad Imirboutine", 2));
-        postulants.add(new Postulant("Angel Anerckjel", 4));
-
-        // 30 -> nombre maximal de votants
-        // 15 jour du scrutin
-        Scrutin scrutin = new Scrutin(postulants, 30, 15, false);
-
-        scrutin.resultats();
-
-        // FIN TEST 1
-
-        // TEST 2
-        System.out.println("Test partie II:");
-        System.out.println("---------------");
-
-        scrutin = new Scrutin(postulants, 20, 15);
-        // tous les bulletins passent le check de la date
-        // les parametres de simuler sont dans l'ordre:
-        // le pourcentage de votants et le jour du vote
-        scrutin.simuler(0.75, 12);
-        scrutin.compterVotes();
-        scrutin.resultats();
-
-        scrutin = new Scrutin(postulants, 20, 15);
-        // seuls les bulletins papier non courrier passent
-        scrutin.simuler(0.75, 15);
-        scrutin.compterVotes();
-        scrutin.resultats();
-
-        scrutin = new Scrutin(postulants, 20, 15);
-        // les bulletins electroniques ne passent pas
-        scrutin.simuler(0.75, 15);
-        scrutin.compterVotes();
-        scrutin.resultats();
-        //FIN TEST 2
-
+        // FIN TEST PARTIE 2
     }
 }
+
