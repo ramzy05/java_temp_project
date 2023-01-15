@@ -1,8 +1,11 @@
+package Exo6;
+
 import java.util.ArrayList;
 
 /*******************************************
  * Completez le programme a partir d'ici.
  *******************************************/
+
 class Position {
     private double x;
     private double y;
@@ -101,9 +104,11 @@ class Neurone {
     }
 
     protected void propage(){
-        for (Neurone neurone : connexions) {
-            neurone.recoitStimulus(this.signal);
-        }
+        this.connexions.forEach(
+            (neurone) -> {
+                neurone.recoitStimulus(this.signal);
+            }
+        );
     }
 
     public void recoitStimulus(double stimulus){
@@ -113,15 +118,13 @@ class Neurone {
 
     @Override
     public String toString(){
-        String tmp = "Le neurone en position " + position.toString() + " avec attenuation " + this.facteur;
-
+        String txt = "Le neurone en position " + position.toString() + " avec attenuation " + this.facteur + " en connexion avec\n";
         if(this.getNbConnexions() != 0){
-            tmp +=  " en connexion avec\n";
             for(Neurone n : this.connexions)
-                tmp = tmp + "- un neurone en position " + n.position.toString() + "\n";
-            return tmp ;
+                txt = txt + "- un neurone en position " + n.position.toString() + "\n";
+            return txt ;
         }else{
-            return tmp + "  sans connexion\n";
+            return txt + "  sans connexion\n";
         }
     }
 
@@ -173,7 +176,7 @@ class Cerveau {
         if (getNbNeurones() > 2) {
             this.cerveau.get(0).connexion(this.cerveau.get(2));
         }
-        for(int i = 1; i < getNbNeurones()-2; i ++){
+        for(int i = 1; i <= getNbNeurones()-2; i ++){
             if( i%2 != 0){
                 this.cerveau.get(i).connexion(this.cerveau.get(i+1));
                 this.cerveau.get(i+1).connexion(this.cerveau.get(i+2));
@@ -184,11 +187,10 @@ class Cerveau {
     @Override
     public String toString(){
 
-        String txt = "\n*----------*\n\n" + "Le cerveau contient " + this.getNbNeurones() + " neurone(s)\n";
+        String txt = "\n*----------*\n" + "Le cerveau contient " + this.getNbNeurones() + " neurone(s)\n";
         for( int i=0; i < this.getNbNeurones(); i++){
             txt = txt + this.cerveau.get(i).toString() + "\n";
         }
-        txt += "*----------*";
         return txt;
     }
 
@@ -197,6 +199,7 @@ class Cerveau {
         this.cerveau.add(neuroneCumulatif);
     }
 }
+
 /*******************************************
  * Ne pas modifier apres cette ligne
  * pour pr'eserver les fonctionnalit'es et
@@ -204,7 +207,7 @@ class Cerveau {
  * Votre programme sera test'e avec d'autres
  * donn'ees.
  *******************************************/
-public class SimulateurNeurone {
+public class SimulateurNeurone5 {
 
     public static void main(String[] args) {
         // TEST DE LA PARTIE 1
@@ -244,7 +247,6 @@ public class SimulateurNeurone {
         neuron5.recoitStimulus(10);
         neuron5.recoitStimulus(10);
         System.out.println("Signal du neurone cumulatif  -> " + neuron5.getSignal());
-
         // FIN TEST DE LA PARTIE 2
 
         // TEST DE LA PARTIE 3
