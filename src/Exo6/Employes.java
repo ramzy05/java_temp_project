@@ -17,10 +17,10 @@ import java.util.Scanner;
 class Employe {
     private String nom;
     private int revenuMensuel;
-    private int tauxOccupation;
+    private double tauxOccupation;
     private double montantPrime = 0.0;
 
-    public Employe(String nom, int revenuMensuel, int tauxOccupation){
+    public Employe(String nom, double tauxOccupation, int revenuMensuel){
         this.nom = nom;
         this.revenuMensuel = revenuMensuel;
         if(tauxOccupation<10){
@@ -83,7 +83,7 @@ class Employe {
         return revenuMensuel;
     }
 
-    public int getTauxOccupation() {
+    public double getTauxOccupation() {
         return tauxOccupation;
     }
 
@@ -105,7 +105,7 @@ class Manager extends Employe{
     private int nbClientsApportes;
 
     public Manager(String nom, int revenuMensuel, int nbJoursVoyage, int nbClientsApportes) {
-        super(nom, revenuMensuel, 100);
+        super(nom, 100, revenuMensuel);
         this.nbClientsApportes = nbClientsApportes;
         this.nbJoursVoyage = nbJoursVoyage;
         System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un manager");
@@ -146,7 +146,7 @@ class Testeur extends Employe {
     int nbErreurCorrigees;
 
     public Testeur(String nom, int revenuMensuel, int nbErreurCorrigees, int tauxOccupation) {
-        super(nom, revenuMensuel, tauxOccupation);
+        super(nom, tauxOccupation, revenuMensuel);
         this.nbErreurCorrigees = nbErreurCorrigees;
         System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un testeur");
     }
@@ -171,7 +171,7 @@ class Programmeur extends Employe{
     int nbProjetsAcheves;
 
     public Programmeur(String nom, int revenuMensuel, int nbProjetsAcheves, int tauxOccupation) {
-        super(nom, revenuMensuel, tauxOccupation);
+        super(nom, tauxOccupation, revenuMensuel);
         this.nbProjetsAcheves = nbProjetsAcheves;
         System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un programmeur");
     }
