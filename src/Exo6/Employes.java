@@ -13,11 +13,11 @@ import java.util.Scanner;
 //"  A mené à bien "
 class Employe {
     private String nom;
-    private int revenuMensuel;
-    private int tauxOccupation;
+    private double revenuMensuel;
+    private int tauxOccupation=100;
     private double montantPrime = 0.0;
 
-    public Employe(String nom, int revenuMensuel, int tauxOccupation){
+    public Employe(String nom, double revenuMensuel, int tauxOccupation){
         this.nom = nom;
         this.revenuMensuel = revenuMensuel;
         if(tauxOccupation<10){
@@ -27,7 +27,11 @@ class Employe {
         }else{
             this.tauxOccupation = tauxOccupation;
         }
-        this.montantPrime = 0.0;
+    }
+
+    public Employe(String nom, double revenuMensuel){
+        this.nom = nom;
+        this.revenuMensuel = revenuMensuel;
     }
 
     public void demandePrime() {
@@ -36,7 +40,7 @@ class Employe {
         Scanner keyboard = new Scanner(System.in);
         do {
             try {
-                System.out.println("Montant de la prime souhaitée par " + this.nom + "?");
+                System.out.println("Montant de la prime souhaitée par " + this.nom + " ?");
                 montantPrime = keyboard.nextDouble();
                 if(montantPrime > 0.02*this.revenuAnnuel()){
                     System.out.println("Trop cher!");
@@ -53,7 +57,7 @@ class Employe {
     }
 
     public String toString(){
-        return this.nom + " :\n" + "  Taux d'occupation : " + this.tauxOccupation + "%.";
+        return this.nom + " :\n" + "  Taux d'occupation : " + this.tauxOccupation + "%. Salaire annuel: "+String.format("%.2f",this.revenuAnnuel())+" francs.";
     }
 
     public void setNom(String nom) {
@@ -76,7 +80,7 @@ class Employe {
         return nom;
     }
 
-    public int getRevenuMensuel() {
+    public double getRevenuMensuel() {
         return revenuMensuel;
     }
 
@@ -101,22 +105,29 @@ class Manager extends Employe{
     private int nbJoursVoyage;
     private int nbClientsApportes;
 
-    public Manager(String nom, int revenuMensuel, int nbJoursVoyage, int nbClientsApportes) {
-        super(nom, revenuMensuel, 100);
+    public Manager(String nom, double revenuMensuel, int nbJoursVoyage, int nbClientsApportes) {
+        super(nom, revenuMensuel);
         this.nbClientsApportes = nbClientsApportes;
         this.nbJoursVoyage = nbJoursVoyage;
-        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un manager");
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un manager.");
+    }
+
+    public Manager(String nom, double revenuMensuel, int nbJoursVoyage, int nbClientsApportes, int taux) {
+        super(nom, revenuMensuel, taux);
+        this.nbClientsApportes = nbClientsApportes;
+        this.nbJoursVoyage = nbJoursVoyage;
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un manager.");
     }
 
     @Override
     public String toString(){
         if(this.getMontantPrime() != 0){
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " clients";
+            return "Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " nouveaux clients";
         }else{
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " clients";
+            return "Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A voyagé " + this.nbJoursVoyage + " jours et apporté " + this.nbClientsApportes + " nouveaux clients";
         }
     }
-
+    
     public double revenuAnnuel() {
         return super.revenuAnnuel() + FACTEUR_GAIN_CLIENT*this.nbClientsApportes + FACTEUR_GAIN_VOYAGE*this.nbJoursVoyage;
     }
@@ -140,20 +151,26 @@ class Manager extends Employe{
 
 class Testeur extends Employe {
     public static final int FACTEUR_GAIN_ERREURS = 10;
-    int nbErreurCorrigees;
+    private int nbErreurCorrigees;
 
-    public Testeur(String nom, int revenuMensuel, int nbErreurCorrigees, int tauxOccupation) {
+    public Testeur(String nom, double revenuMensuel, int nbErreurCorrigees, int tauxOccupation) {
         super(nom, revenuMensuel, tauxOccupation);
         this.nbErreurCorrigees = nbErreurCorrigees;
-        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un testeur");
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un testeur.");
+    }
+
+    public Testeur(String nom, double revenuMensuel, int nbErreurCorrigees) {
+        super(nom, revenuMensuel);
+        this.nbErreurCorrigees = nbErreurCorrigees;
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un testeur.");
     }
 
     @Override
     public String toString(){
         if (this.getMontantPrime() != 0){
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs";
+            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs.";
         }else{
-            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs";
+            return super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A corrigé " + this.nbErreurCorrigees + " erreurs.";
         }
     }
 
@@ -165,20 +182,26 @@ class Testeur extends Employe {
 
 class Programmeur extends Employe{
     public static final int FACTEUR_GAIN_PROJETS = 200;
-    int nbProjetsAcheves;
+    private int nbProjetsAcheves;
 
-    public Programmeur(String nom, int revenuMensuel, int nbProjetsAcheves, int tauxOccupation) {
+    public Programmeur(String nom, double revenuMensuel, int nbProjetsAcheves, int tauxOccupation) {
         super(nom, revenuMensuel, tauxOccupation);
         this.nbProjetsAcheves = nbProjetsAcheves;
-        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un programmeur");
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un programmeur.");
+    }
+
+    public Programmeur(String nom, double revenuMensuel, int nbProjetsAcheves) {
+        super(nom, revenuMensuel);
+        this.nbProjetsAcheves = nbProjetsAcheves;
+        System.out.println("Nous avons un nouvel employé : " + this.getNom() + ", c'est un programmeur.");
     }
 
     @Override
     public String toString(){
         if(this.getMontantPrime() != 0){
-            return  super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A mené à bien " + this.nbProjetsAcheves + " projets";
+            return  super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs, Prime : " + String.format("%.2f", this.getMontantPrime()) + "\n" + "  A mené à bien " + this.nbProjetsAcheves + " projet";
         }else{
-            return  super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A mené à bien " + this.nbProjetsAcheves + " projets";
+            return  super.toString() + " Salaire annuel : " + String.format("%.2f", this.revenuAnnuel()) + " francs.\n" + "  A mené à bien " + this.nbProjetsAcheves + " projet";
         }
     }
 
